@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby 
+
+#= Synopsis 
+#   Abacus helps you search and navigate inside xfxd files, 
+#   use this command line utility to populate the database
+#
+#= Examples
+#   Load a dictionary with this command
+#     abacus load 'path/to/dictionary.xdxf'
+#
+#   Remove a dictionary with
+#     abacus remove 'path/to/dictionary.xdxf'
+#
+#= Usage
+#   abacus [options] {load|remove} source_file
+#
+#= Options
+#   -h --help       print this help page
+#   -v --version    print the application version
+#   no options at the moment
+#
+#= Author
+#   Sandro Paganotti
+#
+#= Copyright
+#   Copyright (c) 2010 Sandro Paganotti. Licensed under the MIT License:
+#   http://www.opensource.org/licenses/mit-license.php
+
+ABACUS_CONFIG_FILEPATH = ENV["ABACUS_CONFIG_FILEPATH"] if !ENV["ABACUS_CONFIG_FILEPATH"].nil?
+require File.join(File.dirname(__FILE__),'..','lib','abacus')
+
+
+case ARGV.shift
+  when 'db:create'
+      # Create database if not exist
+      Abacus::MigrationUtilities.create_database! if !File.exist?(Abacus::Abacus::CONNECTION_STRING['database'])
+    
+  when 'db:xdxf:import'
+      # Import a xdxf file inside the database
+      Abacus::Abacus.import(ARGV.shift, :verbose=>true)
+  
+  when 'db:herigone:generate'
+      # Generate herigone numbers upon a specifc system
+      Abacus::Herigone.new(ARGV.shift).generate_on_db(:verbose=>true)
+
+
+end
+
+
+
+

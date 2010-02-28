@@ -1,0 +1,27 @@
+database:
+  adapter: sqlite3
+  database: <%=File.join(ENV['HOME'] || ENV['USERPROFILE'] || (Abacus::LIB_ROOT + File::SEPARATOR + ".."),'.abacus_db','abacus')%>
+  timeout: 5000
+  
+system:
+  default:
+    0:
+      z,s
+    1:
+      t,d,th
+    2:
+      n
+    3:
+      m
+    4:
+      r
+    5:
+      l
+    6:
+      j,ch,sh,dge
+    7:
+      k
+    8:
+      f,ph,v
+    9:
+      p,b
